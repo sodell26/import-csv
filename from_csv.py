@@ -9,8 +9,9 @@ def convert_csv(file):
     data = [row for row in json_of_csv]
     csv_file.close()
 
-    stocks_for_account = find_stocks_for_account(data, '1')
-    return stocks_for_account
+    # stocks_for_account = find_stocks_for_account(data, '1')
+    accounts_with_stock = find_accounts_with_stocks(data, 'GOOG')
+    return accounts_with_stock
     
 # parse out the csv
 # find all accounts related to the account number
@@ -21,4 +22,14 @@ def find_stocks_for_account(data,accountNum):
                 return account
             else:
                 return 'No account found'
+
+def find_accounts_with_stocks(data, stockName):
+    accounts = []
+    for stock in data:
+        for key, value in stock.items():
+            if value == stockName:
+                accounts.append(stock['account_number'])
+            
+    return accounts
+
 print(convert_csv(imported_csv))
